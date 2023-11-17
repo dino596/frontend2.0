@@ -1,0 +1,53 @@
+<style>
+  /* Existing styles remain unchanged */
+
+  body {
+    background-color: #0fe291; /* colorfull background color for the body */
+    color: #050303; /* White text color */
+    font-family: 'Comic Sans', sans-serif;
+  }
+
+  .calculator-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+    max-width: 400px;
+    margin: 20px auto;
+  }
+
+  .calculator-output {
+    grid-column: span 5;
+    grid-row: span 1;
+    padding: 0.25em;
+    font-size: 20px;
+    border: 5px solid #d420d1; /* prink border color */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #555; /* Dark background color */
+    color: #eee; /* Light text color */
+  }
+
+  .calculator-number,
+  .calculator-operation,
+  .calculator-clear,
+  .calculator-equals {
+    padding: 0.5em;
+    font-size: 18px;
+    border: 2px solid #5416d8; /* Medium-dark border color */
+    text-align: center;
+    cursor: pointer;
+    background-color: #43d31e; /* Medium-dark background color */
+    color: #0f0202; /* White text color */
+  }
+
+  .calculator-number:hover,
+  .calculator-operation:hover,
+  .calculator-clear:hover,
+  .calculator-equals:hover {
+    background-color: #66a036; /* differnt color on hover */
+  }
+
+  /* Add more styles as needed */
+
+</style>
