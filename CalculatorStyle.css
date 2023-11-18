@@ -106,7 +106,7 @@
   padding: 0.5em;
   position: relative;
   top: -510px;
-  left: 140px;
+  left: 138px;
   gap: 5px;
   height: 100px;
 }
@@ -142,4 +142,24 @@
 
 .calculator-operation:hover {
   background-color: #a738fb;
+}
+
+.calculator-equals {
+  font-size: 15px;
+  border: 2px solid #5416d8;
+  text-align: center;
+  cursor: pointer;
+  background-color: #c880ff;
+  color: #0f0202;
+  border-radius: 25px;
+  line-height: 90px;
+  display: float;
+  float: right;
+  width: 290px;
+  padding: 0.5em;
+  position: relative;
+  top: -320px;
+  right: 18px;
+  gap: 5px;
+  height: 100px;
 }
