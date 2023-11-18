@@ -5,55 +5,50 @@ title: Calculator Base
 permalink: 
 ---
 
-<style>
-  .calculator-output {
-    /* calulator output 
-      top bar shows the results of the calculator;
-      result to take up the entirety of the first row;
-      span defines 4 columns and 1 row
-    */
-    grid-column: span 4;
-    grid-row: span 1;
-  
-    padding: 0.25em;
-    font-size: 20px;
-    border: 5px solid black;
-  
-    display: flex;
-    align-items: center;
-  }
-</style>
+<link rel="stylesheet" href="CalculatorStyle.css">
 
-<!-- Add a container for the animation -->
-<div id="animation">
-  <div class="calculator-container">
-      <!--result-->
-      <div class="calculator-output" id="output">0</div>
-      <!--row 1-->
+<div class="calculator-container">
+    <div class="calculator-outputs">
+      <div class="calculator-output" id="binary">0</div>
+      <div class="calculator-output" id="octal">0</div>
+      <div class="calculator-output" id="decimal">0</div>
+      <div class="calculator-output" id="hexadecimal">0</div>
+    </div>
+    <div class="calculator-switch">Hexadecimal</div>
+    <div class="calculator-gates">
+      <div class="calculator-gate" id="AND">A</div>
+      <div class="calculator-gate" id="OR">B</div>
+      <div class="calculator-gate" id="NOT">C</div>
+      <div class="calculator-gate" id="NAND">D</div>
+      <div class="calculator-gate" id="XOR">E</div>
+      <div class="calculator-gate" id="XNOR">F</div>
+    </div>
+    <div class="calculator-bit-shifts">
+      <div class="calculator-bit-shift" id="left"><<</div>
+      <div class="calculator-bit-shift" id="right">>></div>
+    </div>
+    <div class="calculator-clear">C</div>
+    <div class="calculator-operations">
+      <div class="calculator-operation" id="division">÷</div>
+      <div class="calculator-operation" id="multiplication">×</div>
+      <div class="calculator-operation" id="subtraction">-</div>
+      <div class="calculator-operation" id="addition">+</div>
+    </div>
+    <div class="calculator-numbers">
       <div class="calculator-number">1</div>
       <div class="calculator-number">2</div>
       <div class="calculator-number">3</div>
-      <div class="calculator-operation">+</div>
-      <div class="calculator-operation" id="binButton">BIN</div>
       <!--row 2-->
       <div class="calculator-number">4</div>
       <div class="calculator-number">5</div>
       <div class="calculator-number">6</div>
-      <div class="calculator-operation">-</div>
-      <div class="calculator-operation" id="decButton">DEC</div>
       <!--row 3-->
       <div class="calculator-number">7</div>
       <div class="calculator-number">8</div>
       <div class="calculator-number">9</div>
-      <div class="calculator-operation">*</div>
-      <div class="calculator-operation" id="hexButton">HEX</div>
       <!--row 4-->
-      <div class="calculator-clear">A/C</div>
       <div class="calculator-number">0</div>
-      <div class="calculator-number">.</div>
-      <div class="calculator-equals">=</div>
-      <div class="calculator-operation" id="octButton">OCT</div>
-  </div>
+    </div>
 </div>
 
 <!-- JavaScript (JS) implementation of the calculator. -->
