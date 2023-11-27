@@ -5,97 +5,89 @@ title: Calculator Base
 permalink: 
 ---
 
-<style>
-  .calculator-output {
-    /* calulator output 
-      top bar shows the results of the calculator;
-      result to take up the entirety of the first row;
-      span defines 4 columns and 1 row
-    */
-    grid-column: span 4;
-    grid-row: span 1;
-  
-    padding: 0.25em;
-    font-size: 20px;
-    border: 5px solid black;
-  
-    display: flex;
-    align-items: center;
-  }
-</style>
+<link rel="stylesheet" href="CalculatorStyle.css">
 
-<!-- Add a container for the animation -->
-<div id="animation">
-  <div class="calculator-container">
-      <!--result-->
+<div class="calculator-container">
+    <div class="calculator-outputs">
+      <div class="calculator-output" id="binary">0</div>
+      <div class="calculator-output" id="octal">0</div>
       <div class="calculator-output" id="output">0</div>
-      <!--row 1-->
+      <div class="calculator-output" id="hexadecimal">0</div>
+    </div>
+    <div class="calculator-switch">Hexadecimal</div>
+    <div class="calculator-gates">
+      <div class="calculator-gate" id="AND">A</div>
+      <div class="calculator-gate" id="OR">B</div>
+      <div class="calculator-gate" id="NOT">C</div>
+      <div class="calculator-gate" id="NAND">D</div>
+      <div class="calculator-gate" id="XOR">E</div>
+      <div class="calculator-gate" id="XNOR">F</div>
+    </div>
+    <div class="calculator-bit-shifts">
+      <div class="calculator-bit-shift" id="left"><<</div>
+      <div class="calculator-bit-shift" id="right">>></div>
+    </div>
+    <div class="calculator-clear">C</div>
+    <div class="calculator-operations">
+      <div class="calculator-operation" id="division">÷</div>
+      <div class="calculator-operation" id="multiplication">×</div>
+      <div class="calculator-operation" id="subtraction">-</div>
+      <div class="calculator-operation" id="addition">+</div>
+    </div>
+    <div class="calculator-numbers">
       <div class="calculator-number">1</div>
       <div class="calculator-number">2</div>
       <div class="calculator-number">3</div>
-      <div class="calculator-operation">+</div>
-      <div class="calculator-operation" id="binButton">BIN</div>
-      <!--row 2-->
       <div class="calculator-number">4</div>
       <div class="calculator-number">5</div>
       <div class="calculator-number">6</div>
-      <div class="calculator-operation">-</div>
-      <div class="calculator-operation" id="decButton">DEC</div>
-      <!--row 3-->
       <div class="calculator-number">7</div>
       <div class="calculator-number">8</div>
       <div class="calculator-number">9</div>
-      <div class="calculator-operation">*</div>
-      <div class="calculator-operation" id="hexButton">HEX</div>
-      <!--row 4-->
-      <div class="calculator-clear">A/C</div>
       <div class="calculator-number">0</div>
-      <div class="calculator-number">.</div>
-      <div class="calculator-equals">=</div>
-      <div class="calculator-operation" id="octButton">OCT</div>
-  </div>
+    </div>
+    <div class="calculator-backspace">⌫</div>
+    <div class="calculator-equals">=</div>
 </div>
 
-<!-- JavaScript (JS) implementation of the calculator. -->
+<script src="scripts/logic_gates.js"></script>
+
 <script>
-  // initialize important variables to manage calculations
   var firstNumber = null;
   var operator = null;
   var nextReady = true;
-  // build objects containing key elements
+
   const output = document.getElementById("output");
   const numbers = document.querySelectorAll(".calculator-number");
   const operations = document.querySelectorAll(".calculator-operation");
   const clear = document.querySelectorAll(".calculator-clear");
-  const equals = document.querySelectorAll(".calculator-equals");
+  const equals = document.querySelector(".calculator-equals");
 
-  // Number buttons listener
+  var toggleSwitch = document.querySelector(".calculator-switch");
+  var ANDgate = document.getElementById("AND");
+  var ORgate = document.getElementById("OR");
+  var NOTgate = document.getElementById("NOT");
+  var NANDgate = document.getElementById("NAND");
+  var XORgate = document.getElementById("XOR");
+  var XNORgate = document.getElementById("XNOR");
+
   numbers.forEach(button => {
     button.addEventListener("click", function() {
       number(button.textContent);
     });
   });
 
-  // Number action
-  function number (value) { // function to input numbers into the calculator
-      if (value != ".") {
-          if (nextReady == true) { // nextReady is used to tell the computer when the user is going to input a completely new number
-              output.innerHTML = value;
-              if (value != "0") { // if statement to ensure that there are no multiple leading zeroes
-                  nextReady = false;
-              }
-          } else {
-              output.innerHTML = output.innerHTML + value; // concatenation is used to add the numbers to the end of the input
-          }
-      } else { // special case for adding a decimal; can't have two decimals
-          if (output.innerHTML.indexOf(".") == -1) {
-              output.innerHTML = output.innerHTML + value;
-              nextReady = false;
-          }
-      }
+  function number (value) {
+    if (nextReady == true) {
+        output.innerHTML = value;
+        if (value != "0") {
+            nextReady = false;
+        }
+    } else {
+        output.innerHTML = output.innerHTML + value;
+    }
   }
 
-  // Operation buttons listener
   operations.forEach(button => {
     button.addEventListener("click", function() {
       operation(button.textContent);
@@ -166,6 +158,9 @@ permalink:
       output.innerHTML = octalResult;
   }
 
+
+
+/*
   // Binary button listener
   document.getElementById('binButton').addEventListener('click', function () {
       let decimalInput = parseFloat(output.innerHTML);
@@ -187,12 +182,35 @@ permalink:
   document.getElementById('octButton').addEventListener('click', function () {
       convertToOctal();
   });
+  */
+
+  toggleSwitch.addEventListener("click", function() {
+    if(toggleSwitch.textContent == "Hexadecimal") {
+      toggleSwitch.textContent = "Logic Gates";
+      ANDgate.textContent = "AND";
+      ORgate.textContent = "OR";
+      NOTgate.textContent = "NOT";
+      NANDgate.textContent = "NAND";
+      XORgate.textContent = "XOR";
+      XNORgate.textContent = "XNOR";
+    } else {
+      toggleSwitch.textContent = "Hexadecimal";
+      ANDgate.textContent = "A";
+      ORgate.textContent = "B";
+      NOTgate.textContent = "C";
+      NANDgate.textContent = "D";
+      XORgate.textContent = "E";
+      XNORgate.textContent = "F";
+    }
+  });
+
+  ANDgate.addEventListener("click", function() {
+    output.innerHTML = AND_gate(firstNumber, parseFloat(output.innerHTML));
+  });
 
   // Equals button listener
-  equals.forEach(button => {
-    button.addEventListener("click", function() {
-      equal();
-    });
+  equals.addEventListener("click", function() {
+    equal();
   });
 
   // Equal action
@@ -215,34 +233,4 @@ permalink:
       output.innerHTML = "0";
       nextReady = true;
   }
-</script>
-
-<!-- 
-Vanta animations just for fun, load JS onto the page
--->
-<script src="{{site.baseurl}}/assets/js/three.r119.min.js"></script>
-<script src="{{site.baseurl}}/assets/js/vanta.halo.min.js"></script>
-<script src="{{site.baseurl}}/assets/js/vanta.birds.min.js"></script>
-<script src="{{site.baseurl}}/assets/js/vanta.net.min.js"></script>
-<script src="{{site.baseurl}}/assets/js/vanta.rings.min.js"></script>
-
-<script>
-// setup vanta scripts as functions
-var vantaInstances = {
-  halo: VANTA.HALO,
-  birds: VANTA.BIRDS,
-  net: VANTA.NET,
-  rings: VANTA.RINGS
-};
-
-// obtain a random vanta function
-var vantaInstance = vantaInstances[Object.keys(vantaInstances)[Math.floor(Math.random() * Object.keys(vantaInstances).length)]];
-
-// run the animation
-vantaInstance({
-  el: "#animation",
-  mouseControls: true,
-  touchControls: true,
-  gyroControls: false
-});
 </script>
