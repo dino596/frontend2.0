@@ -12,7 +12,7 @@
 }
 
 .calculator-output {
-  font-size: 25px;
+  font-size: 40px;
   text-align: right;
   padding: 5px;
   width: 100%;
@@ -23,7 +23,7 @@
 
 .calculator-switch {
   padding: 0.5em;
-  font-size: 15px;
+  font-size: 30px;
   border: 2px solid #5416d8;
   text-align: center;
   cursor: pointer;
@@ -48,7 +48,7 @@
 
 .calculator-gate {
   padding: 0.5em;
-  font-size: 15px;
+  font-size: 30px;
   border: 2px solid #5416d8;
   text-align: center;
   cursor: pointer;
@@ -77,7 +77,7 @@
 }
 
 .calculator-bit-shift {
-  font-size: 15px;
+  font-size: 30px;
   border: 2px solid #5416d8;
   text-align: center;
   cursor: pointer;
@@ -92,7 +92,7 @@
 }
 
 .calculator-clear {
-  font-size: 15px;
+  font-size: 30px;
   border: 2px solid #5416d8;
   text-align: center;
   cursor: pointer;
@@ -130,7 +130,7 @@
 }
 
 .calculator-operation {
-  font-size: 15px;
+  font-size: 30px;
   border: 2px solid #5416d8;
   text-align: center;
   cursor: pointer;
@@ -145,7 +145,7 @@
 }
 
 .calculator-equals {
-  font-size: 15px;
+  font-size: 30px;
   border: 2px solid #5416d8;
   text-align: center;
   cursor: pointer;
@@ -162,4 +162,62 @@
   right: 18px;
   gap: 5px;
   height: 100px;
+}
+
+/* Add this to your CalculatorStyle.css file */
+.calculator-number {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  padding: 10px;
+  font-size: 30px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #c880ff;
+  border: 1px solid #5416d8;
+  color: #0f0202;
+  border-radius: 5px;
+}
+
+.calculator-number:hover {
+  background-color: #a738fb;
+}
+
+.calculator-numbers {
+  display: float;
+  float: right;
+  width: 290px;
+  padding: 0.5em;
+  position: relative;
+  top: -517px;
+  right: 295px;
+  gap: 5px;
+  display: grid;
+  height: 100px;
+
+}
+
+.calculator-backspace {
+  font-size: 30px;
+  border: 2px solid #5416d8;
+  text-align: center;
+  cursor: pointer;
+  background-color: #c880ff;
+  color: #0f0202;
+  border-radius: 25px;
+  line-height: 90px;
+  display: float;
+  float: right;
+  width: 145px;
+  padding: 0.5em;
+  position: relative;
+  top: -320px;
+  right: 18px;
+  gap: 5px;
+  height: 100px;
+}
+
+.calculator-backspace:hover {
+  background-color: #a738fb;
 }
