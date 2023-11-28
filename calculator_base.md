@@ -5,7 +5,6 @@ title: Calculator Base
 permalink: 
 ---
 
-
 <link rel="stylesheet" href="CalculatorStyle.css">
 
 <div class="calculator-container">
@@ -15,14 +14,14 @@ permalink:
       <div class="calculator-output" id="output">0</div>
       <div class="calculator-output" id="hexadecimal">0</div>
     </div>
-    <div class="calculator-switch">Hexadecimal</div>
+    <div class="calculator-switch">Logic Gates</div>
     <div class="calculator-gates">
-      <div class="calculator-gate" id="AND">A</div>
-      <div class="calculator-gate" id="OR">B</div>
-      <div class="calculator-gate" id="NOT">C</div>
-      <div class="calculator-gate" id="NAND">D</div>
-      <div class="calculator-gate" id="XOR">E</div>
-      <div class="calculator-gate" id="XNOR">F</div>
+      <div class="calculator-gate" id="AND">AND</div>
+      <div class="calculator-gate" id="OR">OR</div>
+      <div class="calculator-gate" id="NOT">NOT</div>
+      <div class="calculator-gate" id="NAND">NAND</div>
+      <div class="calculator-gate" id="XOR">XOR</div>
+      <div class="calculator-gate" id="XNOR">XNOR</div>
     </div>
     <div class="calculator-bit-shifts">
       <div class="calculator-bit-shift" id="left"><<</div>
@@ -63,6 +62,7 @@ permalink:
   const operations = document.querySelectorAll(".calculator-operation");
   const clear = document.querySelectorAll(".calculator-clear");
   const equals = document.querySelector(".calculator-equals");
+  const backspace = document.querySelector(".calculator-backspace");
 
   var toggleSwitch = document.querySelector(".calculator-switch");
   var ANDgate = document.getElementById("AND");
@@ -95,44 +95,34 @@ permalink:
     });
   });
 
-  // Operator action
-  function operation (choice) { // function to input operations into the calculator
-      if (firstNumber == null) { // once the operation is chosen, the displayed number is stored into the variable firstNumber
-          firstNumber = parseInt(output.innerHTML);
-          nextReady = true;
-          operator = choice;
-          return; // exits function
-      }
-      // occurs if there is already a number stored in the calculator
-      firstNumber = calculate(firstNumber, parseFloat(output.innerHTML)); 
-      operator = choice;
-      output.innerHTML = firstNumber.toString();
-      nextReady = true;
+  function operation (choice) {
+    firstNumber = parseInt(output.innerHTML);
+    nextReady = true;
+    operator = choice;
   }
 
-  // Calculator
-  function calculate (first, second) { // function to calculate the result of the equation
-      let result = 0;
-      switch (operator) {
-          case "+":
-              result = first + second;
-              break;
-          case "-":
-              result = first - second;
-              break;
-          case "*":
-              result = first * second;
-              break;
-          case "/":
-              result = first / second;
-              break;
-        
-          default: 
-              break;
-      }
-      return result;
+  function calculate (first, second) {
+    let result = 0;
+    switch (operator) {
+        case "+":
+            result = first + second;
+            break;
+        case "-":
+            result = first - second;
+            break;
+        case "×":
+            result = first * second;
+            break;
+        case "÷":
+            result = first / second;
+            break;
+        default: 
+            break;
+    }
+    return Math.floor(result);
   }
 
+/*
 // Binary conversion function
   function decimalToBinary(decimalNumber) {
       return (decimalNumber >>> 0).toString(2);
@@ -159,9 +149,6 @@ permalink:
       output.innerHTML = octalResult;
   }
 
-
-
-/*
   // Binary button listener
   document.getElementById('binButton').addEventListener('click', function () {
       let decimalInput = parseFloat(output.innerHTML);
@@ -206,32 +193,36 @@ permalink:
   });
 
   ANDgate.addEventListener("click", function() {
-    output.innerHTML = AND_gate(firstNumber, parseFloat(output.innerHTML));
+    output.innerHTML = AND_gate(firstNumber, parseInt(output.innerHTML));
   });
 
   // Equals button listener
   equals.addEventListener("click", function() {
-    equal();
-  });
-
-  // Equal action
-  function equal () { // function used when the equals button is clicked; calculates equation and displays it
-      firstNumber = calculate(firstNumber, parseFloat(output.innerHTML));
+    if (firstNumber){
+      firstNumber = calculate(firstNumber, parseInt(output.innerHTML));
       output.innerHTML = firstNumber.toString();
       nextReady = true;
-  }
+      operator = null;
+      firstNumber = null;
+      return;
+    }
+  });
 
   // Clear button listener
   clear.forEach(button => {
     button.addEventListener("click", function() {
-      clearCalc();
-    });
-  });
-
-  // A/C action
-  function clearCalc () { // clears calculator
       firstNumber = null;
       output.innerHTML = "0";
       nextReady = true;
-  }
+    });
+  });
+
+  backspace.addEventListener("click", function() {
+    if (output.innerHTML.length > 1) {
+      output.innerHTML = output.innerHTML.slice(0, -1);
+    } else {
+      output.innerHTML = "0";
+      nextReady = true;
+    }
+  });
 </script>
