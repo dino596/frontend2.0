@@ -68,8 +68,8 @@
   width: 290px;
   padding: 0.5em;
   position: relative;
-  top: -517px;
-  right: 295px;
+  top: -555px;
+  right: 293px;
   gap: 5px;
   display: grid;
   height: 100px;
@@ -99,13 +99,13 @@
   background-color: #c880ff;
   color: #0f0202;
   border-radius: 25px;
-  line-height: 90px;
+  line-height: 75px;
   display: float;
   float: right;
   width: 145px;
   padding: 0.5em;
   position: relative;
-  top: -510px;
+  top: -545px;
   left: 138px;
   gap: 5px;
   height: 100px;
@@ -121,7 +121,7 @@
   width: 145px;
   padding: 0.5em;
   position: relative;
-  top: -517px;
+  top: -550px;
   left: 425px;
   gap: 5px;
   display: grid;
@@ -155,32 +155,16 @@
   line-height: 90px;
   display: float;
   float: right;
-  width: 290px;
+  width: 270px;
   padding: 0.5em;
   position: relative;
-  top: -320px;
-  right: 18px;
+  top: -215px;
+  left: 130px;
   gap: 5px;
-  height: 100px;
+  height: 105px;
 }
 
-/* Add this to your CalculatorStyle.css file */
-.calculator-number {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  margin: 5px;
-  padding: 10px;
-  font-size: 30px;
-  text-align: center;
-  cursor: pointer;
-  background-color: #c880ff;
-  border: 1px solid #5416d8;
-  color: #0f0202;
-  border-radius: 5px;
-}
-
-.calculator-number:hover {
+.calculator-equals:hover {
   background-color: #a738fb;
 }
 
@@ -190,12 +174,27 @@
   width: 290px;
   padding: 0.5em;
   position: relative;
-  top: -517px;
-  right: 295px;
+  top: -445px;
+  left: 285px;
   gap: 5px;
   display: grid;
   height: 100px;
+  grid-template-columns: repeat(3, 138px);
+}
 
+.calculator-number {
+  font-size: 30px;
+  border: 2px solid #5416d8;
+  text-align: center;
+  cursor: pointer;
+  background-color: #c880ff;
+  color: #0f0202;
+  border-radius: 25px;
+  line-height: 100px;
+}
+
+.calculator-number:hover {
+  background-color: #a738fb;
 }
 
 .calculator-backspace {
@@ -212,10 +211,10 @@
   width: 145px;
   padding: 0.5em;
   position: relative;
-  top: -320px;
-  right: 18px;
+  top: -215px;
+  right: 290px;
   gap: 5px;
-  height: 100px;
+  height: 105px;
 }
 
 .calculator-backspace:hover {
