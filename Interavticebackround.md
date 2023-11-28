@@ -4,31 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mouse Follow Calculator</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-    }
-
-    #calculator-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1; /* Ensure the calculator is above the background */
-    }
-
-    #mouse-follower {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none; /* Allow the mouse to interact with elements beneath */
-      z-index: 0; /* Set a lower z-index for the background */
-      background: linear-gradient(to right, #232526, #414345);
-    }
-  </style>
 </head>
 <body>
   <div id="mouse-follower"></div>
