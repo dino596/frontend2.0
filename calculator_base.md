@@ -7,6 +7,7 @@ permalink:
 
 <link rel="stylesheet" href="CalculatorStyle.css">
 
+<div class="mouse-follower"></div>
 <div class="calculator-container">
     <div class="calculator-outputs">
       <div class="calculator-output" id="binary">0</div>
@@ -64,60 +65,68 @@ permalink:
   const equals = document.querySelector(".calculator-equals");
   const backspace = document.querySelector(".calculator-backspace");
 
-  var toggleSwitch = document.querySelector(".calculator-switch");
-  var ANDgate = document.getElementById("AND");
-  var ORgate = document.getElementById("OR");
-  var NOTgate = document.getElementById("NOT");
-  var NANDgate = document.getElementById("NAND");
-  var XORgate = document.getElementById("XOR");
-  var XNORgate = document.getElementById("XNOR");
+  const toggleSwitch = document.querySelector(".calculator-switch");
+  const gates = document.querySelectorAll(".calculator-gate");
 
   numbers.forEach(button => {
     button.addEventListener("click", function() {
-      number(button.textContent);
+      if (nextReady == true) {
+          output.innerHTML = button.textContent;
+          if (button.textContent != "0") {
+              nextReady = false;
+          }
+      } else {
+          output.innerHTML = output.innerHTML + button.textContent;
+      }
     });
   });
-
-  function number (value) {
-    if (nextReady == true) {
-        output.innerHTML = value;
-        if (value != "0") {
-            nextReady = false;
-        }
-    } else {
-        output.innerHTML = output.innerHTML + value;
-    }
-  }
 
   operations.forEach(button => {
     button.addEventListener("click", function() {
-      operation(button.textContent);
+      firstNumber = parseInt(output.innerHTML);
+      nextReady = true;
+      operator = button.textContent;
     });
   });
-
-  function operation (choice) {
-    firstNumber = parseInt(output.innerHTML);
-    nextReady = true;
-    operator = choice;
-  }
-
+  
   function calculate (first, second) {
     let result = 0;
     switch (operator) {
-        case "+":
-            result = first + second;
-            break;
-        case "-":
-            result = first - second;
-            break;
-        case "×":
-            result = first * second;
-            break;
-        case "÷":
-            result = first / second;
-            break;
-        default: 
-            break;
+      case "+":
+        result = first + second;
+        break;
+      case "-":
+        result = first - second;
+        if (result < 0) {
+          result = 0;
+        }
+        break;
+      case "×":
+        result = first * second;
+        break;
+      case "÷":
+        result = first / second;
+        break;
+      case "AND":
+        result = first & second;
+        break;
+      case "OR":
+        result = first | second;
+        break;
+      case "NAND":
+        result = notGate(first & second);
+        break;
+      case "NOR":
+        result = notGate(first | second);
+        break;
+      case "XOR":
+        result = first ^ second;
+        break;
+      case "XNOR":
+        result = notGate(first ^ second);
+        break;
+      default: 
+        break;
     }
     return Math.floor(result);
   }
@@ -192,11 +201,42 @@ permalink:
     }
   });
 
-  ANDgate.addEventListener("click", function() {
-    output.innerHTML = AND_gate(firstNumber, parseInt(output.innerHTML));
+  gates.forEach(button => {
+    button.addEventListener("click", function() {
+      if (button.textContent == "NOT") {
+        output.innerHTML = notGate(parseInt(output.innerHTML))
+        nextReady = true;
+        operator = null;
+        firstNumber = null;
+        return;
+      }
+      firstNumber = parseInt(output.innerHTML);
+      nextReady = true;
+      operator = button.textContent;
+    });
   });
 
-  // Equals button listener
+  function notGate (num) {
+    num = num.toString(2);
+    var result = "";
+    for (let i = 0; i < num.length; i++) {
+      if (num[i] == "0") {
+        result += "1";
+      } else {
+        result += "0";
+      }
+    }
+    return parseInt(result, 2);
+  }
+
+  operations.forEach(button => {
+    button.addEventListener("click", function() {
+      firstNumber = parseInt(output.innerHTML);
+      nextReady = true;
+      operator = button.textContent;
+    });
+  });
+
   equals.addEventListener("click", function() {
     if (firstNumber){
       firstNumber = calculate(firstNumber, parseInt(output.innerHTML));
@@ -208,7 +248,6 @@ permalink:
     }
   });
 
-  // Clear button listener
   clear.forEach(button => {
     button.addEventListener("click", function() {
       firstNumber = null;
