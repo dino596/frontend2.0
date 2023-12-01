@@ -69,6 +69,13 @@ permalink:
   const gates = document.querySelectorAll(".calculator-gate");
 
   const bitSwitch = document.querySelectorAll(".calculator-bit-shift");
+  
+  var ANDgate = document.getElementById("AND");
+  var ORgate = document.getElementById("OR");
+  var NOTgate = document.getElementById("NOT");
+  var NANDgate = document.getElementById("NAND");
+  var XORgate = document.getElementById("XOR");
+  var XNORgate = document.getElementById("XNOR");
 
   numbers.forEach(button => {
     button.addEventListener("click", function() {
