@@ -68,6 +68,8 @@ permalink:
   const toggleSwitch = document.querySelector(".calculator-switch");
   const gates = document.querySelectorAll(".calculator-gate");
 
+  const bitSwitch = document.querySelectorAll(".calculator-bit-shift");
+
   numbers.forEach(button => {
     button.addEventListener("click", function() {
       if (nextReady == true) {
@@ -96,10 +98,7 @@ permalink:
         result = first + second;
         break;
       case "-":
-        result = first - second;
-        if (result < 0) {
-          result = 0;
-        }
+        result = (result = first - second) < 0 ? 0 : result;
         break;
       case "×":
         result = first * second;
@@ -124,6 +123,12 @@ permalink:
         break;
       case "XNOR":
         result = notGate(first ^ second);
+        break;
+      case ">>":
+        result = first >> second;
+        break;
+      case "<<":
+        result = first << second;
         break;
       default: 
         break;
@@ -213,6 +218,14 @@ permalink:
       firstNumber = parseInt(output.innerHTML);
       nextReady = true;
       operator = button.textContent;
+    });
+  });
+
+  bitSwitch.forEach(button => {
+    button.addEventListener("click", function() {
+      firstNumber = parseInt(output.innerHTML);
+      nextReady = true;
+      operator = button.textContent;     
     });
   });
 
