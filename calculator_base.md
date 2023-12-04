@@ -59,6 +59,8 @@ permalink:
   var nextReady = true;
 
   const output = document.getElementById("output");
+  const binaryOutput = document.getElementById("binary");
+
   const numbers = document.querySelectorAll(".calculator-number");
   const operations = document.querySelectorAll(".calculator-operation");
   const clear = document.querySelectorAll(".calculator-clear");
@@ -81,11 +83,13 @@ permalink:
     button.addEventListener("click", function() {
       if (nextReady == true) {
           output.innerHTML = button.textContent;
+          binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
           if (button.textContent != "0") {
               nextReady = false;
           }
       } else {
           output.innerHTML = output.innerHTML + button.textContent;
+          binaryOutput.innerHTML = output.innerHTML.toString(2);
       }
     });
   });
@@ -261,6 +265,7 @@ permalink:
     if (firstNumber){
       firstNumber = calculate(firstNumber, parseInt(output.innerHTML));
       output.innerHTML = firstNumber.toString();
+      binaryOutput.innerHTML = output.innerHTML.toString(2);
       nextReady = true;
       operator = null;
       firstNumber = null;
