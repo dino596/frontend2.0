@@ -51,8 +51,6 @@ permalink:
     <div class="calculator-equals">=</div>
 </div>
 
-<script src="scripts/logic_gates.js"></script>
-
 <script>
   var firstNumber = null;
   var operator = null;
