@@ -51,14 +51,16 @@ permalink:
     <div class="calculator-equals">=</div>
 </div>
 
-<script src="scripts/logic_gates.js"></script>
-
 <script>
   var firstNumber = null;
   var operator = null;
   var nextReady = true;
 
   const output = document.getElementById("output");
+  const binaryOutput = document.getElementById("binary");
+  const hexadecimalOutput = document.getElementById("hexadecimal");
+  const octalOutput = document.getElementById("octal");
+
   const numbers = document.querySelectorAll(".calculator-number");
   const operations = document.querySelectorAll(".calculator-operation");
   const clear = document.querySelectorAll(".calculator-clear");
@@ -81,11 +83,17 @@ permalink:
     button.addEventListener("click", function() {
       if (nextReady == true) {
           output.innerHTML = button.textContent;
+          binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
+          hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16);
+          octalOutput.innerHTML = parseInt(output.innerHTML).toString(8);
           if (button.textContent != "0") {
               nextReady = false;
           }
       } else {
           output.innerHTML = output.innerHTML + button.textContent;
+          binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
+          hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16);
+          octalOutput.innerHTML = parseInt(output.innerHTML).toString(8);
       }
     });
   });
@@ -142,57 +150,6 @@ permalink:
     }
     return Math.floor(result);
   }
-
-/*
-// Binary conversion function
-  function decimalToBinary(decimalNumber) {
-      return (decimalNumber >>> 0).toString(2);
-  }
-
-  // Decimal conversion function
-  function convertToDecimal() {
-      let binaryInput = output.innerHTML;
-      let decimalResult = parseInt(binaryInput, 2);
-      output.innerHTML = decimalResult;
-  }
-
-  // Hexadecimal conversion function
-  function convertToHexadecimal() {
-      let decimalInput = parseFloat(output.innerHTML);
-      let hexadecimalResult = decimalInput.toString(16).toUpperCase();
-      output.innerHTML = hexadecimalResult;
-  }
-
-  // Octal conversion function
-  function convertToOctal() {
-      let decimalInput = parseFloat(output.innerHTML);
-      let octalResult = decimalInput.toString(8);
-      output.innerHTML = octalResult;
-  }
-
-  // Binary button listener
-  document.getElementById('binButton').addEventListener('click', function () {
-      let decimalInput = parseFloat(output.innerHTML);
-      let binaryResult = decimalToBinary(decimalInput);
-      output.innerHTML = binaryResult;
-  });
-
-  // Decimal button listener
-  document.getElementById('decButton').addEventListener('click', function () {
-      convertToDecimal();
-  });
-
-  // Hexadecimal button listener
-  document.getElementById('hexButton').addEventListener('click', function () {
-      convertToHexadecimal();
-  });
-
-  // Octal button listener
-  document.getElementById('octButton').addEventListener('click', function () {
-      convertToOctal();
-  });
-  */
-
   toggleSwitch.addEventListener("click", function() {
     if(toggleSwitch.textContent == "Hexadecimal") {
       toggleSwitch.textContent = "Logic Gates";
@@ -217,6 +174,9 @@ permalink:
     button.addEventListener("click", function() {
       if (button.textContent == "NOT") {
         output.innerHTML = notGate(parseInt(output.innerHTML))
+        binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
+        hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16);
+        octalOutput.innerHTML = parseInt(output.innerHTML).toString(8);
         nextReady = true;
         operator = null;
         firstNumber = null;
@@ -261,6 +221,9 @@ permalink:
     if (firstNumber){
       firstNumber = calculate(firstNumber, parseInt(output.innerHTML));
       output.innerHTML = firstNumber.toString();
+      binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
+      hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16);
+      octalOutput.innerHTML = parseInt(output.innerHTML).toString(8);
       nextReady = true;
       operator = null;
       firstNumber = null;
@@ -272,6 +235,9 @@ permalink:
     button.addEventListener("click", function() {
       firstNumber = null;
       output.innerHTML = "0";
+      binaryOutput.innerHTML = "0";
+      hexadecimalOutput.innerHTML = "0";
+      octalOutput.innerHTML = "0";
       nextReady = true;
     });
   });
@@ -279,8 +245,14 @@ permalink:
   backspace.addEventListener("click", function() {
     if (output.innerHTML.length > 1) {
       output.innerHTML = output.innerHTML.slice(0, -1);
+      binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
+      hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16);
+      octalOutput.innerHTML = parseInt(output.innerHTML).toString(8);
     } else {
       output.innerHTML = "0";
+      binaryOutput.innerHTML = "0";
+      hexadecimalOutput.innerHTML = "0";
+      octalOutput.innerHTML = "0";
       nextReady = true;
     }
   });
