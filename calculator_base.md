@@ -10,10 +10,10 @@ permalink:
 <div class="mouse-follower"></div>
 <div class="calculator-container">
     <div class="calculator-outputs">
-      <div class="calculator-output" id="binary">0</div>
-      <div class="calculator-output" id="octal">0</div>
-      <div class="calculator-output" id="output">0</div>
-      <div class="calculator-output" id="hexadecimal">0</div>
+      <div class="calculator-output" id="binary">00000000</div>
+      <div class="calculator-output" id="octal">000</div>
+      <div class="calculator-output" id="output">000</div>
+      <div class="calculator-output" id="hexadecimal">000</div>
     </div>
     <div class="calculator-switch">Logic Gates</div>
     <div class="calculator-gates">
@@ -82,18 +82,18 @@ permalink:
   numbers.forEach(button => {
     button.addEventListener("click", function() {
       if (nextReady == true) {
-          output.innerHTML = button.textContent;
-          binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
-          hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16);
-          octalOutput.innerHTML = parseInt(output.innerHTML).toString(8);
-          if (button.textContent != "0") {
-              nextReady = false;
-          }
+        output.innerHTML = output.innerHTML.slice(1) + button.textContent;
+        binaryOutput.innerHTML = binaryOutput.innerHTML.slice(0, -parseInt(output.innerHTML).toString(2).length) + parseInt(output.innerHTML).toString(2);
+        octalOutput.innerHTML = octalOutput.innerHTML.slice(0, -parseInt(output.innerHTML).toString(8).length) + parseInt(output.innerHTML).toString(8);
+        hexadecimalOutput.innerHTML = hexadecimalOutput.innerHTML.slice(0, -parseInt(output.innerHTML).toString(16).length) + parseInt(output.innerHTML).toString(16);
+        if (button.textContent != "0") {
+          nextReady = false;
+        }
       } else {
-          output.innerHTML = output.innerHTML + button.textContent;
-          binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
-          hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16);
-          octalOutput.innerHTML = parseInt(output.innerHTML).toString(8);
+        output.innerHTML = output.innerHTML.slice(1) + button.textContent;
+        binaryOutput.innerHTML = "00000000".slice(parseInt(output.innerHTML).toString(2).length) + parseInt(output.innerHTML).toString(2);
+        octalOutput.innerHTML = "000".slice(parseInt(output.innerHTML).toString(8).length) + parseInt(output.innerHTML).toString(8);
+        hexadecimalOutput.innerHTML = "000".slice(parseInt(output.innerHTML).toString(16).length) + parseInt(output.innerHTML).toString(16);
       }
     });
   });
@@ -113,7 +113,7 @@ permalink:
         result = first + second;
         break;
       case "-":
-        result = (result = first - second) < 0 ? 0 : result;
+        result = first - second;
         break;
       case "×":
         result = first * second;
@@ -234,25 +234,25 @@ permalink:
   clear.forEach(button => {
     button.addEventListener("click", function() {
       firstNumber = null;
-      output.innerHTML = "0";
-      binaryOutput.innerHTML = "0";
-      hexadecimalOutput.innerHTML = "0";
-      octalOutput.innerHTML = "0";
+      output.innerHTML = "000";
+      binaryOutput.innerHTML = "00000000";
+      hexadecimalOutput.innerHTML = "000";
+      octalOutput.innerHTML = "000";
       nextReady = true;
     });
   });
 
   backspace.addEventListener("click", function() {
-    if (output.innerHTML.length > 1) {
+    if (output.innerHTML != "000") {
       output.innerHTML = output.innerHTML.slice(0, -1);
       binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
       hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16);
       octalOutput.innerHTML = parseInt(output.innerHTML).toString(8);
     } else {
-      output.innerHTML = "0";
-      binaryOutput.innerHTML = "0";
-      hexadecimalOutput.innerHTML = "0";
-      octalOutput.innerHTML = "0";
+      output.innerHTML = "000";
+      binaryOutput.innerHTML = "00000000";
+      hexadecimalOutput.innerHTML = "000";
+      octalOutput.innerHTML = "000";
       nextReady = true;
     }
   });
