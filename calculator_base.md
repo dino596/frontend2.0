@@ -171,7 +171,6 @@ permalink:
   gates.forEach(button => {
     button.addEventListener("click", function() {
       if (button.textContent == "NOT") {
-        console.log(~parseInt(output.innerHTML));
         if (~(parseInt(output.innerHTML)) >= 0) {
           output.innerHTML = (~parseInt(output.innerHTML)).toString().padStart(3, "0");
           binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2).padStart(8, "0");
@@ -237,24 +236,17 @@ permalink:
       binaryOutput.innerHTML = "00000000";
       octalOutput.innerHTML = "000";
       hexadecimalOutput.innerHTML = "00";
-
       nextReady = true;
     });
   });
 
   backspace.addEventListener("click", function() {
-    if (!nextReady) {
+    if (!nextReady & output.innerHTML != "000") {
       if (output.innerHTML != "000") {
         output.innerHTML = output.innerHTML.slice(0, -1).padStart(3, "0");
         binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2).padStart(8, "0");
         octalOutput.innerHTML = parseInt(output.innerHTML).toString(8).padStart(3, "0");
         hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16).padStart(2, "0");
-      } else {
-        output.innerHTML = "000";
-        binaryOutput.innerHTML = "00000000";
-        octalOutput.innerHTML = "000";
-        hexadecimalOutput.innerHTML = "00";
- 
         nextReady = true;
       }
     }
