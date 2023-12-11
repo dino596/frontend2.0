@@ -13,7 +13,7 @@ permalink:
       <div class="calculator-output" id="binary">00000000</div>
       <div class="calculator-output" id="octal">000</div>
       <div class="calculator-output" id="output">000</div>
-      <div class="calculator-output" id="hexadecimal">000</div>
+      <div class="calculator-output" id="hexadecimal">00</div>
     </div>
     <div class="calculator-switch">Logic Gates</div>
     <div class="calculator-gates">
@@ -58,8 +58,9 @@ permalink:
 
   const output = document.getElementById("output");
   const binaryOutput = document.getElementById("binary");
-  const hexadecimalOutput = document.getElementById("hexadecimal");
   const octalOutput = document.getElementById("octal");
+  const hexadecimalOutput = document.getElementById("hexadecimal");
+
 
   const numbers = document.querySelectorAll(".calculator-number");
   const operations = document.querySelectorAll(".calculator-operation");
@@ -82,19 +83,16 @@ permalink:
   numbers.forEach(button => {
     button.addEventListener("click", function() {
       if (nextReady == true) {
-        output.innerHTML = output.innerHTML.slice(1) + button.textContent;
-        binaryOutput.innerHTML = binaryOutput.innerHTML.slice(0, -parseInt(output.innerHTML).toString(2).length) + parseInt(output.innerHTML).toString(2);
-        octalOutput.innerHTML = octalOutput.innerHTML.slice(0, -parseInt(output.innerHTML).toString(8).length) + parseInt(output.innerHTML).toString(8);
-        hexadecimalOutput.innerHTML = hexadecimalOutput.innerHTML.slice(0, -parseInt(output.innerHTML).toString(16).length) + parseInt(output.innerHTML).toString(16);
+        output.innerHTML = button.textContent.padStart(3, "0");
         if (button.textContent != "0") {
           nextReady = false;
         }
       } else {
-        output.innerHTML = output.innerHTML.slice(1) + button.textContent;
-        binaryOutput.innerHTML = "00000000".slice(parseInt(output.innerHTML).toString(2).length) + parseInt(output.innerHTML).toString(2);
-        octalOutput.innerHTML = "000".slice(parseInt(output.innerHTML).toString(8).length) + parseInt(output.innerHTML).toString(8);
-        hexadecimalOutput.innerHTML = "000".slice(parseInt(output.innerHTML).toString(16).length) + parseInt(output.innerHTML).toString(16);
+        output.innerHTML = parseInt(output.innerHTML + button.textContent).toString().padStart(3, "0");
       }
+      binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2).padStart(8, "0");
+      octalOutput.innerHTML = parseInt(output.innerHTML).toString(8).padStart(3, "0");
+      hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16).padStart(2, "0");
     });
   });
 
@@ -128,16 +126,16 @@ permalink:
         result = first | second;
         break;
       case "NAND":
-        result = notGate(first & second);
+        result = ~(first & second);
         break;
       case "NOR":
-        result = notGate(first | second);
+        result = ~(first | second);
         break;
       case "XOR":
         result = first ^ second;
         break;
       case "XNOR":
-        result = notGate(first ^ second);
+        result = ~(first ^ second);
         break;
       case ">>":
         result = first >> second;
@@ -173,18 +171,26 @@ permalink:
   gates.forEach(button => {
     button.addEventListener("click", function() {
       if (button.textContent == "NOT") {
-        output.innerHTML = notGate(parseInt(output.innerHTML))
-        binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
-        hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16);
-        octalOutput.innerHTML = parseInt(output.innerHTML).toString(8);
+        console.log(~parseInt(output.innerHTML));
+        if (~(parseInt(output.innerHTML)) >= 0) {
+          output.innerHTML = (~parseInt(output.innerHTML)).toString().padStart(3, "0");
+          binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2).padStart(8, "0");
+          octalOutput.innerHTML = parseInt(output.innerHTML).toString(8).padStart(3, "0");
+          hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16).padStart(2, "0");
+        } else {
+          output.innerHTML = "-" + (-~parseInt(output.innerHTML)).toString().padStart(3, "0");
+          binaryOutput.innerHTML = (parseInt(output.innerHTML) & 0xFF).toString(2);
+          octalOutput.innerHTML = (parseInt(output.innerHTML) & 0xFF).toString(8);
+          hexadecimalOutput.innerHTML = (parseInt(output.innerHTML) & 0xFF).toString(16);
+        }
         nextReady = true;
         operator = null;
         firstNumber = null;
-        return;
+      } else {
+        firstNumber = parseInt(output.innerHTML);
+        nextReady = true;
+        operator = button.textContent;
       }
-      firstNumber = parseInt(output.innerHTML);
-      nextReady = true;
-      operator = button.textContent;
     });
   });
 
@@ -196,19 +202,6 @@ permalink:
     });
   });
 
-  function notGate (num) {
-    num = num.toString(2);
-    var result = "";
-    for (let i = 0; i < num.length; i++) {
-      if (num[i] == "0") {
-        result += "1";
-      } else {
-        result += "0";
-      }
-    }
-    return parseInt(result, 2);
-  }
-
   operations.forEach(button => {
     button.addEventListener("click", function() {
       firstNumber = parseInt(output.innerHTML);
@@ -219,11 +212,17 @@ permalink:
 
   equals.addEventListener("click", function() {
     if (firstNumber){
-      firstNumber = calculate(firstNumber, parseInt(output.innerHTML));
-      output.innerHTML = firstNumber.toString();
-      binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
-      hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16);
-      octalOutput.innerHTML = parseInt(output.innerHTML).toString(8);
+      if (calculate(firstNumber, parseInt(output.innerHTML)) >= 0) {
+        output.innerHTML = calculate(firstNumber, parseInt(output.innerHTML)).toString().padStart(3, "0");
+        binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2).padStart(8, "0");
+        octalOutput.innerHTML = parseInt(output.innerHTML).toString(8).padStart(3, "0");
+        hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16).padStart(2, "0");
+      } else {
+        output.innerHTML = "-" + (-calculate(firstNumber, parseInt(output.innerHTML))).toString().padStart(3, "0");
+        binaryOutput.innerHTML = (parseInt(output.innerHTML) & 0xFF).toString(2);
+        octalOutput.innerHTML = (parseInt(output.innerHTML) & 0xFF).toString(8);
+        hexadecimalOutput.innerHTML = (parseInt(output.innerHTML) & 0xFF).toString(16);
+      }
       nextReady = true;
       operator = null;
       firstNumber = null;
@@ -236,24 +235,28 @@ permalink:
       firstNumber = null;
       output.innerHTML = "000";
       binaryOutput.innerHTML = "00000000";
-      hexadecimalOutput.innerHTML = "000";
       octalOutput.innerHTML = "000";
+      hexadecimalOutput.innerHTML = "00";
+
       nextReady = true;
     });
   });
 
   backspace.addEventListener("click", function() {
-    if (output.innerHTML != "000") {
-      output.innerHTML = output.innerHTML.slice(0, -1);
-      binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2);
-      hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16);
-      octalOutput.innerHTML = parseInt(output.innerHTML).toString(8);
-    } else {
-      output.innerHTML = "000";
-      binaryOutput.innerHTML = "00000000";
-      hexadecimalOutput.innerHTML = "000";
-      octalOutput.innerHTML = "000";
-      nextReady = true;
+    if (!nextReady) {
+      if (output.innerHTML != "000") {
+        output.innerHTML = output.innerHTML.slice(0, -1).padStart(3, "0");
+        binaryOutput.innerHTML = parseInt(output.innerHTML).toString(2).padStart(8, "0");
+        octalOutput.innerHTML = parseInt(output.innerHTML).toString(8).padStart(3, "0");
+        hexadecimalOutput.innerHTML = parseInt(output.innerHTML).toString(16).padStart(2, "0");
+      } else {
+        output.innerHTML = "000";
+        binaryOutput.innerHTML = "00000000";
+        octalOutput.innerHTML = "000";
+        hexadecimalOutput.innerHTML = "00";
+ 
+        nextReady = true;
+      }
     }
   });
 </script>
