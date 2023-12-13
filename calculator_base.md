@@ -216,7 +216,7 @@ permalink:
       operator = button.textContent;
     });
   });
-
+2
   equals.addEventListener("click", function() {
     if (firstNumber){
       firstNumber = calculate(firstNumber, parseInt(output.innerHTML));
