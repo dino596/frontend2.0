@@ -2,7 +2,7 @@
 toc: True
 comments: True
 layout: post
-title: Passion Project Ideation
+title: Team Agile Manifesto
 description: 
 courses: {'compsci': {'week': 6}}
 type: hacks
